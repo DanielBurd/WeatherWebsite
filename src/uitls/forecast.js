@@ -1,5 +1,8 @@
 const request=require('request');
+
+
 forecast=(lat,long,callback)=>{
+    const data=`The coordients for ypu loaction are ${lat}, ${long}`;
     const url=`http://api.weatherstack.com/current?access_key=02caa714fef2f242d2d2c5525e737531&query=${lat},${long}&units=m`;
     request({url,json:true},(error,{body})=>{
         if(error){
@@ -7,7 +10,7 @@ forecast=(lat,long,callback)=>{
         }else if(body.error){
             callback('unable to find locaion',undefined)
         }else{
-            callback(undefined,`${body.current.weather_descriptions[0]}, It is ${body.current.temperature} degrees out, It feels like ${body.current.feelslike} degrees out.`);
+            callback(undefined,data+'<br>, '+ body.current.weather_descriptions[0]+', It is '+body.current.temperature +' degrees out, It feels like '+body.current.feelslike+' degrees out.');
         }
     });
     
